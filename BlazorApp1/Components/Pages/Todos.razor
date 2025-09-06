@@ -1,0 +1,14 @@
+﻿@page "/todos"
+@using BlazorApp1.Models
+@inject TodoService TodoService
+
+<h3>Todo List</h3>
+@foreach (var todo in todos)
+{
+    <p>@todo.Title</p>
+}
+
+@code {
+    private List<TodoItem> todos = new();
+    protected override async Task OnInitializedAsync() { todos = await TodoService.GetTodos(); }
+}
