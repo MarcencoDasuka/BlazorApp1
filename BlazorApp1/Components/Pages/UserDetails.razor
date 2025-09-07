@@ -1,0 +1,50 @@
+﻿@page "/users"
+@using BlazorApp.Models
+@using BlazorApp1.Models
+@using BlazorApp1.Services
+@inject IUserService UserService
+@inject NavigationManager Navigation
+
+<h3>Users</h3>
+<a href="/user/add" class="btn btn-primary">Add User</a>
+
+@if (users == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>
+                        <a href="/user/edit/@user.Id" class="btn btn-warning">Edit</a>
+                        <a href="/user/delete/@user.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Users>? users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await UserService.GetUsersAsync();
+    }
+}

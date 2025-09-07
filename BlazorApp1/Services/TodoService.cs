@@ -1,4 +1,5 @@
 ﻿using BlazorApp1;
+using BlazorApp1.Data;
 using BlazorApp1.Models;
 using Microsoft.EntityFrameworkCore;
 

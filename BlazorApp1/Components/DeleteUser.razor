@@ -1,0 +1,37 @@
+﻿@page "/user/delete/{Id:int}"
+@using BlazorApp.Models
+@using BlazorApp1.Models
+@using BlazorApp1.Services
+@inject IUserService UserService
+@inject NavigationManager Navigation
+
+<h3>Delete User</h3>
+
+@if (user == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <p>Are you sure you want to delete @user.Name?</p>
+    <button class="btn btn-danger" @onclick="HandleDelete">Delete</button>
+    <a href="/users" class="btn btn-secondary">Cancel</a>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Users user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await UserService.GetUserByIdAsync(Id);
+    }
+
+    private async Task HandleDelete()
+    {
+        await UserService.DeleteUserAsync(Id);
+        Navigation.NavigateTo("/users");
+    }
+}
